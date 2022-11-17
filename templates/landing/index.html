@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-US" dir="ltr">
+{% load static %}
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -10,7 +11,7 @@
     <link
             rel="shortcut icon"
             type="image/x-icon"
-            href="assets/img/favicons/icon.png"
+            href="{% static 'homepage/assets/img/favicons/icon.png' %}"
     />
 
     <meta name="theme-color" content="#ffffff"/>
@@ -20,9 +21,9 @@
             href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700&amp;display=swap"
             rel="stylesheet"
     />
-    <link href="vendors/prism/prism.css" rel="stylesheet"/>
-    <link href="vendors/swiper/swiper-bundle.min.css" rel="stylesheet"/>
-    <link href="assets/css/theme.css" rel="stylesheet"/>
+    <link href="{% static 'homepage/vendors/prism/prism.css' %}" rel="stylesheet"/>
+    <link href="{% static 'homepage/vendors/swiper/swiper-bundle.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'homepage/assets/css/theme.css' %}" rel="stylesheet"/>
     <style>
         body {
             overflow-y: hidden;
@@ -38,7 +39,7 @@
     >
         <div class="container">
             <a class="navbar-brand" href="index.html"
-            ><img src="assets/img/favicons/icon.png" width="60px" alt=""
+            ><img src="{% static 'homepage/assets/img/favicons/icon.png' %}" width="60px" alt=""
             />Cloud Torrent</a>
             <button
                     class="navbar-toggler"
@@ -79,7 +80,7 @@
     <div class="bg-dark">
         <img
                 class="img-fluid position-absolute end-0"
-                src="assets/img/hero/hero-bg.png"
+                src="{% static 'homepage/assets/img/hero/hero-bg.png' %}"
                 alt=""
         />
 
@@ -100,14 +101,14 @@
                                 Login
                             </button>
                             <button class="btn btn-outline-light mb-3 w-75">
-                                Register
+                                Sign up
                             </button>
                         </div>
                     </div>
                     <div class="col-lg-6 text-center text-lg-end mt-3 mt-lg-0">
                         <img
                                 class="img-fluid"
-                                src="assets/img/hero/hero-graphics.png"
+                                src="{% static 'homepage/assets/img/hero/hero-graphics.png' %}"
                                 alt=""
                         />
                     </div>
@@ -119,22 +120,22 @@
                     >
                         <div class="swiper-wrapper">
                             <div class="swiper-slide text-center">
-                                <img src="assets/Torrent.png" width="50px" alt=""/>
+                                <img src="{% static 'homepage/assets/torrent.png' %}" width="50px" alt=""/>
                             </div>
                             <div class="swiper-slide text-center">
-                                <img src="assets/icons8-utorrent-64.png" width="50px" alt=""/>
+                                <img src="{% static 'homepage/assets/icons8-utorrent-64.png' %}" width="50px" alt=""/>
                             </div>
                             <div class="swiper-slide text-center">
-                                <img src="assets/cloud-storage.png" width="50px" alt=""/>
+                                <img src="{% static 'homepage/assets/cloud-storage.png' %}" width="50px" alt=""/>
                             </div>
                             <div class="swiper-slide text-center">
-                                <img src="assets/cloud.png" width="50px" alt=""/>
+                                <img src="{% static 'homepage/assets/cloud.png' %}" width="50px" alt=""/>
                             </div>
                             <div class="swiper-slide text-center">
-                                <img src="assets/insurance.png" width="50px" alt=""/>
+                                <img src="{% static 'homepage/assets/insurance.png' %}" width="50px" alt=""/>
                             </div>
                             <div class="swiper-slide text-center">
-                                <img src="assets/privacy.png" width="50px" alt=""/>
+                                <img src="{% static 'homepage/assets/privacy.png' %}" width="50px" alt=""/>
                             </div>
                         </div>
                     </div>
@@ -143,15 +144,15 @@
         </section>
     </div>
 </main>
-<script src="vendors/popper/popper.min.js"></script>
-<script src="vendors/bootstrap/bootstrap.min.js"></script>
-<script src="vendors/anchorjs/anchor.min.js"></script>
-<script src="vendors/is/is.min.js"></script>
-<script src="vendors/fontawesome/all.min.js"></script>
-<script src="vendors/lodash/lodash.min.js"></script>
+<script src="{% static 'homepage/vendors/popper/popper.min.js' %}"></script>
+<script src="{% static 'homepage/vendors/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'homepage/vendors/anchorjs/anchor.min.js' %}"></script>
+<script src="{% static 'homepage/vendors/is/is.min.js' %}"></script>
+<script src="{% static 'homepage/vendors/fontawesome/all.min.js' %}"></script>
+<script src="{% static 'homepage/vendors/lodash/lodash.min.js' %}"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
-<script src="vendors/prism/prism.js"></script>
-<script src="vendors/swiper/swiper-bundle.min.js"></script>
-<script src="assets/js/theme.js"></script>
+<script src="{% static 'homepage/vendors/prism/prism.js' %}"></script>
+<script src="{% static 'homepage/vendors/swiper/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'homepage/assets/js/theme.js' %}"></script>
 </body>
 </html>
