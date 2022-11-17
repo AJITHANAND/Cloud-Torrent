@@ -7,3 +7,6 @@ def homepage(request):
 
 def dashboard(request):
     return render(request, 'torrent/index.html')
+
+def login(request):
+    return render(request, 'login/login.html')
