@@ -47,7 +47,7 @@
             data-navbar-on-scroll="data-navbar-on-scroll"
     >
         <div class="container">
-            <a class="navbar-brand" href="index.html"
+            <a class="navbar-brand" href="{% url 'homepage' %}"
             ><img src="{% static 'homepage/assets/img/favicons/icon.png' %}" width="60px" alt=""
             />Cloud Torrent</a>
             <button
@@ -154,6 +154,7 @@
         </section>
     </div>
 </main>
+
 <script src="{% static 'homepage/vendors/popper/popper.min.js' %}"></script>
 <script src="{% static 'homepage/vendors/bootstrap/bootstrap.min.js' %}"></script>
 <script src="{% static 'homepage/vendors/anchorjs/anchor.min.js' %}"></script>
