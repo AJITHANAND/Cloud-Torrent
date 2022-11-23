@@ -6,3 +6,4 @@ class user(models.Model):
     email = models.EmailField(max_length=255, unique=True)
     password = models.CharField(max_length=255)
     premium = models.BooleanField(default=False)
+    profile_pic = models.ImageField(upload_to='user_image', default='user.png')

@@ -22,7 +22,7 @@
             if (!mail.match(exp)) {
                 alert("enter a valid email address");
                 return;
-            } else if (password != confirm) {
+            } else if (confirm !== password) {
                 alert("passwords are not matching");
                 return;
             }
@@ -33,21 +33,20 @@
                 data: {
                     email: document.getElementById("email").value,
                     password: document.getElementById("pass").value,
-                    username: document.getElementById("username").value,
+                    name: document.getElementById("username").value,
                     'csrfmiddlewaretoken': '{{ csrf_token }}'
                 },
                 success: function (data) {
-                    console.log('Submission was successful.');
-                    console.log(data);
+                    $("#myModal").modal()
                 },
                 error: function (data) {
-                    console.log('An error occurred.');
-                    console.log(data);
+                    alert('An error occurred.');
                 },
-
             })
+        }
 
-
+        function change() {
+            location.href = "{% url 'login' %}";
         }
 
     </script>
@@ -239,7 +238,7 @@
                 <div class="modal-body text-center">
                     <h4>Great!</h4>
                     <p>Your account has been created successfully.</p>
-                    <button class="btn btn-success" data-dismiss="modal">
+                    <button class="btn btn-success" onclick="change()" data-dismiss="modal">
                         <span>Start Exploring</span>
                         <i class="material-icons">&#xE5C8;</i>
                     </button>

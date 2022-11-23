@@ -10,6 +10,9 @@
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'homepage/assets/img/favicons/icon.png' %}"/>
 </head>
 <body>
+{% if err %}
+    <script>alert('login failed!!');</script>
+{% endif %}
 <div class="login-box">
     <h2>Login</h2>
     <form id="loginform" method="POST">
