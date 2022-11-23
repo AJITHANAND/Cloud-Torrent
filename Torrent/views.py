@@ -1,8 +1,9 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render
 import hashlib
 from .forms import *
 from django.http import JsonResponse, HttpResponse
+from django.shortcuts import render, redirect
+from .decorators import *
 
 
 def encrypt(password: str):
@@ -10,13 +11,15 @@ def encrypt(password: str):
     return hashlib.sha512(password.encode('utf-8')).hexdigest()
 
 
-# Create your views here.
 def homepage(request):
     return render(request, 'landing/index.html')
 
 
+@useronly
 def dashboard(request):
-    return render(request, 'torrent/index.html')
+    id = request.session.get('userid')
+    obj = user.objects.get(id=id)
+    return render(request, 'torrent/index.html', {'user': obj})
 
 
 def login(request):
@@ -28,9 +31,14 @@ def login(request):
         except ObjectDoesNotExist:
             return render(request, 'login/login.html', {'err': True})
         request.session['userid'] = obj.id
-        return render(request, 'torrent/index.html', )
+        return redirect('dashboard')
     elif request.method == "GET":
         return render(request, 'login/login.html')
+
+
+def logout(request):
+    request.session.flush()
+    return redirect('login')
 
 
 def signup(request):

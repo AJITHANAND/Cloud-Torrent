@@ -19,6 +19,32 @@
     <link href="{% static 'dashboard/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'dashboard/css/style.css' %}" rel="stylesheet">
     <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+    <script>
+        function searchTable() {
+            var input, filter, found, table, tr, td, i, j;
+            input = document.getElementById("search");
+            if (!input.value) {
+                location.reload();
+            }
+            filter = input.value.toUpperCase();
+            table = document.getElementById("torrents");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td");
+                for (j = 0; j < td.length; j++) {
+                    if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        found = true;
+                    }
+                }
+                if (found) {
+                    tr[i].style.display = "";
+                    found = false;
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -38,14 +64,14 @@
             </a>
             <div class="d-flex align-items-center ms-4 mb-4">
                 <div class="position-relative">
-                    <img class="rounded-circle" src="{% static 'dashboard/img/user.png' %}" alt=""
+                    <img class="rounded-circle" src="/media/{{ user.profile_pic }}" alt="profile image"
                          style="width: 40px; height: 40px;">
                     <div
                             class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
                     </div>
                 </div>
                 <div class="ms-3">
-                    <h6 class="mb-0">Username</h6>
+                    <h6 class="mb-0">{{ user.name }}</h6>
                     <span>non-premium</span>
                 </div>
             </div>
@@ -70,7 +96,8 @@
                 <i class="fa fa-bars"></i>
             </a>
             <form class="d-none d-md-flex ms-4">
-                <input class="form-control bg-dark border-0" type="search" placeholder="Search">
+                <input class="form-control bg-dark border-0" onkeyup="searchTable()" id="search" type="search"
+                       placeholder="Search">
             </form>
             <div class="navbar-nav align-items-center ms-auto">
                 <div class="nav-item dropdown">
@@ -90,12 +117,12 @@
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <img class="rounded-circle me-lg-2" src="{% static 'dashboard/img/user.png' %}" alt=""
                              style="width: 40px; height: 40px;">
-                        <span class="d-none d-lg-inline-flex">User Name</span>
+                        <span class="d-none d-lg-inline-flex">{{ user.name }}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                         <a href="#" class="dropdown-item">My Profile</a>
                         <a href="#" class="dropdown-item">Settings</a>
-                        <a href="#" class="dropdown-item">Log Out</a>
+                        <a href="{% url 'logout' %}" class="dropdown-item">Log Out</a>
                     </div>
                 </div>
             </div>
