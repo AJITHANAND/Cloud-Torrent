@@ -45,11 +45,11 @@ def main():
     torrent = client.torrents
     # print(client.torrents_info(torrent_hashes="98cd5d90252265f1c59ab47330ff4c39f48ccc78"))
     # add_to_queue(torrent, link)
-    info = add_to_queue(torrent, link)
-    torrent.add()
-    print(info)
-    # item = torrent.info.all(infohash_v2="va0qtm5kyiia95m9386qqbhgbomfammtiz64vysl")
-    # print(json.dumps(*item, indent=4))
+    # info = add_to_queue(torrent, link)
+    # torrent.add()
+    # print(info)
+    item = torrent.info.all()
+    print(json.dumps([*item], indent=4))
     # print(status(client,"e0d9af6671db5bc4fc77ab5462c50e2f3545dad9"))
     # status(client,None)
 if __name__ == "__main__":

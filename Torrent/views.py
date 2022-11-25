@@ -64,6 +64,8 @@ def usercreate(request):
 
 def add_torrent(request):
     link = request.POST.get('link')
+    userid = request.session.get('userid')
+    print(userid)
     torrent = get_client()
     print(add_to_queue(torrent, link))
     return HttpResponse(request, status=200)
