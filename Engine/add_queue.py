@@ -20,9 +20,11 @@ def add_to_queue(torrent: qbittorrentapi.torrents, magnet: str):
     return hash
 
 
-def status(client, hash):
-    data = client.torrents_info(torrent_hashes=hash)
-    print(json.dumps(*data, indent=4))
+# def status(client, hash):
+#     return client.torrents_info(torrent_hashes=hash)
+def get_status(torrent, hash):
+    data = torrent.info.all(torrent_hashes=hash)
+    return data[0]
 
 
 client = qbittorrentapi.Client(
@@ -48,8 +50,9 @@ def main():
     # info = add_to_queue(torrent, link)
     # torrent.add()
     # print(info)
-    item = torrent.info.all()
-    print(json.dumps([*item], indent=4))
+    item = torrent.info.all(torrent_hashes="e3c00a07ef1fc244f8fcfadc71455a54a02bfbfd")
+    print(item[0])
+    # print(json.dumps(*item, indent=4))
     # print(status(client,"e0d9af6671db5bc4fc77ab5462c50e2f3545dad9"))
     # status(client,None)
 if __name__ == "__main__":
