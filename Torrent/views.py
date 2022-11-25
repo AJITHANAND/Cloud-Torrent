@@ -4,7 +4,7 @@ from .forms import *
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from .decorators import *
-
+from Engine.add_queue import add_to_queue, get_client
 
 def encrypt(password: str):
     password = "Qwerty@123"
@@ -60,3 +60,10 @@ def usercreate(request):
     else:
         obj = {'status': False}
         return HttpResponse(obj, status=406)
+
+
+def add_torrent(request):
+    link = request.POST.get('link')
+    torrent = get_client()
+    print(add_to_queue(torrent, link))
+    return HttpResponse(request, status=200)

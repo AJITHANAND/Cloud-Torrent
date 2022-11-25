@@ -11,5 +11,6 @@ urlpatterns = [
     path('singup', views.signup, name='signup'),
     path('create', views.usercreate, name='create'),
     path('logout', views.logout, name='logout'),
+    path('add', views.add_torrent, name="add")
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

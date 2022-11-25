@@ -19,6 +19,9 @@
     <link href="{% static 'dashboard/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'dashboard/css/style.css' %}" rel="stylesheet">
     <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+          integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <script>
         function searchTable() {
             var input, filter, found, table, tr, td, i, j;
@@ -43,6 +46,23 @@
                     tr[i].style.display = "none";
                 }
             }
+        }
+
+        function sent() {
+            $.ajax({
+                type: "POST",
+                url: "{% url 'add' %}",
+                data: {
+                    link: document.getElementById('mglink').value,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function (data) {
+                    alert("success")
+                },
+                error: function (data) {
+                    alert('An error occurred.');
+                },
+            })
         }
     </script>
 </head>
@@ -100,6 +120,25 @@
                        placeholder="Search">
             </form>
             <div class="navbar-nav align-items-center ms-auto">
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fa-solid fa-cloud-arrow-up me-lg-2"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                        <hr class="dropdown-divider">
+                        <a href="#" class="dropdown-item">
+                            <div class="d-flex align-items-center">
+                                <div class="ms-2">
+                                    <h6 class="fw-normal mb-0"><input id="mglink" type="text"></h6>
+                                    <input class="btn btn-outline-success" onclick="sent()" value="Add" type="button">
+                                    <!-- <small>link</small> -->
+                                </div>
+                            </div>
+                        </a>
+                        <hr class="dropdown-divider">
+                        <!-- <a href="#" class="dropdown-item text-center">all</a> -->
+                    </div>
+                </div>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <i class="fa fa-bell me-lg-2"></i>
@@ -164,9 +203,13 @@
                                 </td>
                                 <td>5GB</td>
                                 <td>
-                                    <button class="btn btn-success">Download</button>
+                                    <button class="btn"><i style="font-size:21px;"
+                                                           class="fa-solid fa-cloud-arrow-down fa-fade"></i></button>
                                 </td>
-                                <td>delete</td>
+                                <td>
+                                    <button class="btn"><i style="font-size: 21px"
+                                                           class="fa-solid fa-trash fa-flip"></i></button>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
