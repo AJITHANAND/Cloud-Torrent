@@ -8,10 +8,10 @@ def useronly(function):
     def wrap(request, *args, **kwargs):
         try:
             entry = user.objects.get(id=request.session.get('userid'))
-            print(entry)
+            # print(entry)
             return function(request, *args, **kwargs)
         except ObjectDoesNotExist:
-            print('not logged')
+            # print('not logged')
             return redirect('login')
 
     wrap.__doc__ = function.__doc__
