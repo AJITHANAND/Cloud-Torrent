@@ -13,5 +13,6 @@ urlpatterns = [
     path('logout', views.logout, name='logout'),
     path('add', views.add_torrent, name="add"),
     path('refresh', views.refresh_torrent, name='refresh'),
+    path('delete', views.delete, name='delete'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

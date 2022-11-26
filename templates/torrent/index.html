@@ -88,7 +88,25 @@
                     location.reload()
                 },
                 error: function (data) {
-                    alert('An error occurred.');
+                    alert('failed to establish a connection to the server');
+                },
+            });
+        }
+
+        function torrent_delete(value) {
+            $.ajax({
+                type: "GET",
+                url: "{% url 'delete' %}",
+                data: {
+                    'hash': value,
+                    {#'csrfmiddlewaretoken': '{{ csrf_token }}'#}
+                },
+                success: function (data) {
+                    alert("deleted successfully")
+                    location.reload()
+                },
+                error: function (data) {
+                    alert('failed to establish a connection to the server');
                 },
             })
         }
@@ -240,8 +258,9 @@
                                         <button onclick="refresh()" class="btn "><i style="font-size: 21px"
                                                                                     class="fa-solid fa-refresh fa-spin"></i>
                                         </button>
-                                        <button class="btn"><i style="font-size: 21px"
-                                                               class="fa-solid fa-trash"></i></button>
+                                        <button onclick="torrent_delete('{{ i.hash }}')" class="btn"><i
+                                                style="font-size: 21px"
+                                                class="fa-solid fa-trash"></i></button>
                                     </td>
                                 </tr>
                             {% endfor %}

@@ -6,7 +6,7 @@ from .forms import *
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from .decorators import *
-from Engine.add_queue import add_to_queue, get_client, get_status
+from Engine.add_queue import add_to_queue, get_client, get_status, delete_torrrent
 
 
 def refresh_torrent(request):
@@ -93,6 +93,8 @@ def add_torrent(request):
     link = request.POST.get('link')
     userid = request.session.get('userid')
     torrent_client = get_client()
+    if torrent_client is None:
+        return HttpResponse(request, status=503)
     hash = add_to_queue(torrent_client, link)
     print(hash)
     info = get_status(torrent_client, hash)
@@ -108,4 +110,15 @@ def add_torrent(request):
     obj.progress = float(info['progress']) * 100
     obj.userid = user.objects.get(id=userid)
     obj.save()
+    return HttpResponse(request, status=200)
+
+
+def delete(request):
+    hash = request.GET.get('hash')
+    torrent_client = get_client()
+    if torrent_client is None:
+        return HttpResponse(request, status=503)
+    obj = torrent.objects.get(hash=hash)
+    obj.delete()
+    delete_torrrent(torrent_client, hash)
     return HttpResponse(request, status=200)
