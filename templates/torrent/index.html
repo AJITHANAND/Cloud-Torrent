@@ -111,10 +111,27 @@
                 },
             })
         }
+
+        let timer;
+
+        function content_refresh() {
+            let array = [
+                {% for i in obj %}
+                    "{{ i.hash }}",
+                {% endfor %}
+            ]
+            for (let i = 0; i < array.length; i++) {
+                if (document.getElementById(array[i]).innerHTML === 'fetching size MB') {
+                    timer = setTimeout(refresh, 5000);
+                }
+                {#console.log(document.getElementById(i).innerHTML);#}
+            }
+        }
+
     </script>
 </head>
 
-<body>
+<body onload="content_refresh()">
 <div class="container-fluid position-relative d-flex p-0">
     <!-- loading -->
     <div id="spinner"
@@ -240,7 +257,9 @@
                                 <tr>
                                     <th scope="row">{{ forloop.counter }}</th>
                                     <td>{{ i.name }}</td>
-                                    <td>{% if i.size == 0 %} fetching size {% else %}{{ i.size }} {% endif %}MB</td>
+                                    <td id="{{ i.hash }}">{% if i.size == 0 %}fetching size
+                                        {% else %}{{ i.size }} {% endif %}MB
+                                    </td>
                                     <td>
                                         <div class="pg-bar mb-3">
                                             <div class="progress" style="margin-top: 3px">
