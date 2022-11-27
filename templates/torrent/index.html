@@ -68,7 +68,8 @@
                     'csrfmiddlewaretoken': '{{ csrf_token }}'
                 },
                 success: function (data) {
-                    alert("success")
+                    alert("added successfully");
+                    location.reload();
                 },
                 error: function (data) {
                     alert('An error occurred.');
@@ -219,11 +220,16 @@
                     <div class="table-responsive">
                         <table id="torrents" class="table sortable">
                             <thead>
+                            <style>
+                                table, td, th {
+                                    text-align: center;
+                                }
+                            </style>
                             <tr>
                                 <th scope="col">Id</th>
-                                <th scope="col">Torrent Name</th>
-                                <th scope="col">Size</th>
-                                <th scope="col">Progress</th>
+                                <th style="width: 30%;" scope="col">Torrent Name</th>
+                                <th style="width: 10%" scope="col">Size</th>
+                                <th style="width: 22%;" scope="col">Progress</th>
                                 <th scope="col">Completed</th>
                                 <th scope="col">Download</th>
                                 <th scope="col">Action</th>
@@ -233,8 +239,8 @@
                             {% for i in obj %}
                                 <tr>
                                     <th scope="row">{{ forloop.counter }}</th>
-                                    <td style="width: 321px;">{{ i.name }}</td>
-                                    <td style="width: 50px">{{ i.size }}MB</td>
+                                    <td>{{ i.name }}</td>
+                                    <td>{% if i.size == 0 %} fetching size {% else %}{{ i.size }} {% endif %}MB</td>
                                     <td>
                                         <div class="pg-bar mb-3">
                                             <div class="progress" style="margin-top: 3px">

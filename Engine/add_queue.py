@@ -10,7 +10,7 @@ def last_update(arr: list):
 
 
 def delete_torrrent(torrent, hash: str):
-    torrent.delete(torrent_hashes=hash)
+    torrent.delete(torrent_hashes=hash, delete_files=True)
     return True
 
 
@@ -68,5 +68,7 @@ def main():
     # print(json.dumps(*item, indent=4))
     # print(status(client,"e0d9af6671db5bc4fc77ab5462c50e2f3545dad9"))
     # status(client,None)
+
+
 if __name__ == "__main__":
     main()
