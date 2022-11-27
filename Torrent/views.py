@@ -27,7 +27,6 @@ def refresh_torrent(request):
 
 
 def encrypt(password: str):
-    password = "Qwerty@123"
     return hashlib.sha512(password.encode('utf-8')).hexdigest()
 
 

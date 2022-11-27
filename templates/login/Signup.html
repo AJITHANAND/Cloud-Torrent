@@ -16,17 +16,29 @@
     <script>
         function validate() {
             let exp = /^(\w+)(\.*(\w)+)*@(\w+(\.\w+)*)\.(\w){2,6}/;
+            let exp_pass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
             let mail = document.getElementById("email").value;
             let password = document.getElementById("pass").value;
             let confirm = document.getElementById("repass").value;
             if (!mail.match(exp)) {
-                alert("enter a valid email address");
+                document.getElementById("data_alert").innerHTML = "please enter a valid email address";
+                $("#myAlert").fadeTo(2000, 500).slideUp(500, function () {
+                    $("#myAlert").slideUp(500);
+                });
+                return;
+            } else if (!password.match(exp_pass)) {
+                document.getElementById("data_alert").innerHTML = "please enter a strong password";
+                $("#myAlert").fadeTo(2000, 500).slideUp(500, function () {
+                    $("#myAlert").slideUp(500);
+                });
                 return;
             } else if (confirm !== password) {
-                alert("passwords are not matching");
+                document.getElementById("data_alert").innerHTML = "passwords are not matching ";
+                $("#myAlert").fadeTo(2000, 500).slideUp(500, function () {
+                    $("#myAlert").slideUp(500);
+                });
                 return;
             }
-            form = document.getElementById("signup");
             $.ajax({
                 type: "POST",
                 url: "{% url 'create' %}",
@@ -52,7 +64,7 @@
     </script>
     <link
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"
+            href="https://fonts.googleapisy.com/css?family=Roboto|Varela+Round"
     />
     <link
             rel="stylesheet"
@@ -216,6 +228,14 @@
             log In
         </a>
     </form>
+</div>
+
+
+<div class="container" style="display:none;" id="myAlert">
+    <div class="alert alert-danger alert-dismissable" id="myAlert2">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <p id="data_alert"></p>
+    </div>
 </div>
 
 <div class="container">
