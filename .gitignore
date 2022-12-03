@@ -1,7 +1,7 @@
 venv/
 .idea/
 .vs/
-!downloads/.gitkeep
+!downloads/ .gitkeep
 
 Drive/client_secret.json
 Drive/*.pickle
