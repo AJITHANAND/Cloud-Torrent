@@ -13,7 +13,7 @@ class torrent(models.Model):
     name = models.CharField(max_length=1000)
     size = models.IntegerField()
     downloads = models.IntegerField(default=0)
-    hash = models.CharField(max_length=40)
+    hash = models.CharField(max_length=40, unique=True)
     progress = models.FloatField(default=0)
     userid = models.ForeignKey(user, on_delete=models.CASCADE)
     completed = models.BooleanField(default=False)

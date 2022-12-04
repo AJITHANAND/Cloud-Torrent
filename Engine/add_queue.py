@@ -1,6 +1,6 @@
 import os
 import qbittorrentapi
-import json
+import re
 
 link = "magnet:?xt=urn:btih:e3c00a07ef1fc244f8fcfadc71455a54a02bfbfd&dn=www.TamilBlasters.autos%20-%20Padavettu%20(2022)%20%5bMalayalam%20-%20HQ%20HDRip%20-%20x264%20-%20AAC%20-%20750MB%20-%20ESub%5d.mkv&tr=udp%3a%2f%2fdownload.nerocloud.me%3a6969%2fannounce&tr=udp%3a%2f%2fcutscloud.duckdns.org%3a6969%2fannounce&tr=udp%3a%2f%2fconcen.org%3a6969%2fannounce&tr=udp%3a%2f%2fchouchou.top%3a8080%2fannounce&tr=udp%3a%2f%2fcarr.codes%3a6969%2fannounce&tr=udp%3a%2f%2fbuddyfly.top%3a6969%2fannounce&tr=udp%3a%2f%2fbt.ktrackers.com%3a6666%2fannounce&tr=udp%3a%2f%2fblack-bird.ynh.fr%3a6969%2fannounce&tr=udp%3a%2f%2fben.kerbertools.xyz%3a6969%2fannounce&tr=udp%3a%2f%2fastrr.ru%3a6969%2fannounce&tr=udp%3a%2f%2fadmin.52ywp.com%3a6969%2fannounce&tr=udp%3a%2f%2faarsen.me%3a6969%2fannounce"
 
@@ -15,7 +15,8 @@ def delete_torrrent(torrent, hash: str):
 
 
 def get_info_hash(link: str):
-    return link[20:60]
+    return re.search('btih:(.*)&dn=', link)
+    # return link[20:60]
 
 
 def add_to_queue(torrent: qbittorrentapi.torrents, magnet: str):
@@ -28,9 +29,11 @@ def add_to_queue(torrent: qbittorrentapi.torrents, magnet: str):
 # def status(client, hash):
 #     return client.torrents_info(torrent_hashes=hash)
 def get_status(torrent, hash):
-    print(hash)
+    print("on queue:", hash)
     data = torrent.info.all(torrent_hashes=hash)
+    print(data)
     return data[0]
+
 
 
 client = qbittorrentapi.Client(
@@ -62,7 +65,7 @@ def main():
     # info = add_to_queue(torrent, link)
     # torrent.add()
     # print(info)
-    # item = torrent.info.all(torrent_hashes="e3c00a07ef1fc244f8fcfadc71455a54a02bfbfd")
+    # item = torrent.info.all(torrent_hashes="7617904c6a1bd5971ce02e07dba57a86393a45596b535dd23cff1985162744bb")
     # print(item)
     # print(item[0])
     # print(json.dumps(*item, indent=4))
