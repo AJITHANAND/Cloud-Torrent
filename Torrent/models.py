@@ -16,3 +16,14 @@ class torrent(models.Model):
     hash = models.CharField(max_length=40)
     progress = models.FloatField(default=0)
     userid = models.ForeignKey(user, on_delete=models.CASCADE)
+    completed = models.BooleanField(default=False)
+
+
+class Gdrive(models.Model):
+    name = models.CharField(max_length=1000)
+    size = models.IntegerField()
+    gid = models.TextField()
+    dirid = models.TextField()
+    userid = models.ForeignKey(user, on_delete=models.CASCADE)
+    torrentid = models.ForeignKey(torrent, on_delete=models.CASCADE)
+    hash = models.CharField(max_length=40)
