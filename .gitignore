@@ -6,3 +6,4 @@ downloads/*
 Drive/client_secret.json
 Drive/*.pickle
 !upload/.gitkeep
+*.pickle
