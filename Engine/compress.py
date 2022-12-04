@@ -2,8 +2,8 @@ import shutil
 import os
 from zipfile import ZipFile
 
-download = '../downloads'
-upload = '../uploads'
+download = 'downloads'
+upload = 'uploads'
 
 
 def checkfile(filename):
@@ -41,4 +41,3 @@ def makeZipFile(name):
         print("unexpected error")
 
 
-makeZipFile('Titanic (1997) [1080p] [YTS.AG]')
