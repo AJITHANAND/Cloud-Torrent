@@ -32,6 +32,13 @@
             box-shadow: none;
         }
 
+        .alert {
+            margin-bottom: 1px;
+            height: 50px;
+            line-height: 30px;
+        {#padding:0px 15px;#} margin-left: 40%;
+        }
+
     </style>
     <script>
         function searchTable() {
@@ -70,6 +77,7 @@
                 success: function (data) {
                     alert("added successfully");
                     location.reload();
+                    content_refresh();
                 },
                 error: function (data) {
                     alert('An error occurred.');
@@ -121,17 +129,45 @@
                 {% endfor %}
             ]
             for (let i = 0; i < array.length; i++) {
-                if (document.getElementById(array[i]).innerHTML === 'fetching size MB') {
+                let exp = /fetching/gi;
+
+                if ((document.getElementById(array[i]).innerHTML).match(exp)) {
                     timer = setTimeout(refresh, 5000);
+                } else {
+                    console.log("else innerHTML")
+                    console.log(document.getElementById(array[i]).innerHTML);
                 }
                 {#console.log(document.getElementById(i).innerHTML);#}
             }
         }
 
+        function download(value, user) {
+
+            alert('cheking files')
+            $.ajax({
+                type: "GET",
+                url: "{% url 'generatelink' %}",
+                data: {
+                    'hash': value,
+                    'user': user,
+                    {#'csrfmiddlewaretoken': '{{ csrf_token }}'#}
+                },
+                success: function (data) {
+
+                    {#location.href=data['link']#}
+                    document.getElementById('my_iframe').src = data['id'];
+
+                },
+                error: function (data) {
+                    alert('files not ready');
+                },
+            })
+        }
     </script>
 </head>
 
 <body onload="content_refresh()">
+<iframe id="my_iframe" style="display:none;"></iframe>
 <div class="container-fluid position-relative d-flex p-0">
     <!-- loading -->
     <div id="spinner"
@@ -273,10 +309,11 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td>{{ i.downloads }}MB</td>
+                                    <td> {{ i.downloads }}MB</td>
                                     <td>
-                                        <button class="btn"><i style="font-size:21px;"
-                                                               class="fa-solid fa-cloud-arrow-down fa-fade"></i>
+                                        <button onclick="download('{{ i.hash }}','{{ user.id }}')" class="btn"><i
+                                                style="font-size:21px;"
+                                                class="fa-solid fa-cloud-arrow-down fa-fade"></i>
                                         </button>
                                     </td>
                                     <td>

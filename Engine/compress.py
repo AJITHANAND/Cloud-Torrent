@@ -41,3 +41,5 @@ def makeZipFile(name):
         print("unexpected error")
 
 
+def removeFile(filename):
+    os.remove('uploads/{}.zip'.format(filename))

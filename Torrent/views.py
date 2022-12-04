@@ -7,6 +7,9 @@ from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from .decorators import *
 from Engine.add_queue import add_to_queue, get_client, get_status, delete_torrrent
+from Engine.compress import makeZipFile
+from Drive.drive import create_folder, create_parent_folder, upload_files
+from Drive.Google import Create_Service
 
 
 def refresh_torrent(request):
@@ -19,11 +22,17 @@ def refresh_torrent(request):
         obj.name = info['name']
         obj.hash = info['hash']
         obj.size = int(info['total_size'])
-        obj.downloads = int(info['downloaded'])
         obj.progress = float(info['progress']) * 100
+        obj.downloads = obj.size * obj.progress / 100
         obj.userid = user.objects.get(id=userid)
+        if info['progress'] == 1:
+            obj.completed = True
         obj.save()
     return HttpResponse(request, status=200)
+
+
+def generatelink(id):
+    return "https://drive.google.com/uc?export=download&id={0}".format(id)
 
 
 def encrypt(password: str):
@@ -61,7 +70,6 @@ def login(request):
         return render(request, 'login/login.html')
 
 
-
 def logout(request):
     request.session.flush()
     return redirect('login')
@@ -95,7 +103,7 @@ def add_torrent(request):
     if torrent_client is None:
         return HttpResponse(request, status=503)
     hash = add_to_queue(torrent_client, link)
-    print(hash)
+    print("printing hash on views:", hash)
     info = get_status(torrent_client, hash)
     print(json.dumps(info, indent=4))
     try:
@@ -121,3 +129,37 @@ def delete(request):
     obj.delete()
     delete_torrrent(torrent_client, hash)
     return HttpResponse(request, status=200)
+
+
+def completed(request):
+    hash = request.GET.get('hash')
+    userid = request.GET.get('user')
+    torrent_client = get_client()
+    if torrent_client is None:
+        return HttpResponse(request, status=503)
+    info = get_status(torrent_client, hash)
+    if info['progress'] != 1:
+        return HttpResponse(request, status=503)
+    try:
+        driveobj = Gdrive.objects.get(userid_id=userid, hash=hash)
+        id = driveobj.gid
+        link = generatelink(id)
+        return HttpResponse(json.dumps({'id': link}), content_type='application/json', status=201)
+    except ObjectDoesNotExist:
+        tobj = torrent.objects.get(hash=hash)
+
+        name = makeZipFile(info['name'])
+        dirid = create_folder(userid, '1hDSrXbTMiHYvDDDWd9RiSIH1DIMXY5hB')
+        gid = upload_files(name, dirid)
+
+        driveobj = Gdrive()
+        driveobj.userid = user.objects.get(id=userid)
+        driveobj.torrentid = tobj
+        driveobj.hash = hash
+        driveobj.size = tobj.size
+        driveobj.name = name
+        driveobj.dirid = dirid
+        driveobj.gid = gid
+        driveobj.save()
+        link = generatelink(gid)
+        return HttpResponse(json.dumps({'id': link}), content_type='application/json', status=201)
